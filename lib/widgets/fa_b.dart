@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:task_manager/screens/task_detail_screen.dart';
 
 
 class FaB extends StatelessWidget {
@@ -12,7 +13,10 @@ class FaB extends StatelessWidget {
     return FloatingActionButton(
       key: Key('addTaskFab'),
       onPressed: () {
-       
+        Navigator.push(
+          context,
+          CupertinoPageRoute(builder: (_) => TaskDetailScreen()),
+        );
       },
       child: Material(
         borderRadius: BorderRadius.circular(15),
