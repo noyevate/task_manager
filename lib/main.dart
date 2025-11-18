@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:task_manager/providers/connectivity_cubit.dart';
+import 'package:task_manager/providers/task_bloc.dart';
 import 'package:task_manager/providers/theme_cubit.dart';
 import 'package:task_manager/repositories/task_repository.dart';
 import 'package:task_manager/services/api_service.dart';
@@ -30,10 +32,20 @@ class MyApp extends StatelessWidget {
       value: repository,
       child: MultiBlocProvider(
         providers: [
-         
+          BlocProvider(
+            create: (_) =>
+                TaskBloc(repository: repository)..add(TaskLoadRequested()),
+          ),
           BlocProvider(create: (_) => ThemeCubit()),
+          BlocProvider(create: (_) => ConnectivityCubit()),
         ],
-        
+        child: BlocListener<ConnectivityCubit, ConnectivityState>(
+          listener: (context, connectivityState) {
+            if (connectivityState.isOnline) {
+              final repo = RepositoryProvider.of<TaskRepository>(context, listen: false);
+              repo.syncPending();
+            }
+          },
           child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, themeState) {
               return MaterialApp(
@@ -49,11 +61,11 @@ class MyApp extends StatelessWidget {
                 ),
                 darkTheme: ThemeData.dark(),
                 themeMode: themeState.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-                home: const MyHomePage(title: ""),
+                home: const MyHomePage(title: "",),
               );
             },
           ),
-        
+        ),
       ),
     );
   }
