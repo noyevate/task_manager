@@ -8,10 +8,8 @@ import 'package:uuid/uuid.dart';
 import 'package:task_manager/models/task.dart';
 import 'package:task_manager/repositories/task_repository.dart';
 
-// -------------------- Mock setup --------------------
 class MockTaskRepository extends Mock implements TaskRepository {}
 
-// A Fake Task so mocktail can use `any<Task>()`
 class FakeTask extends Fake implements Task {}
 
 void main() {
@@ -38,14 +36,12 @@ void main() {
   );
 
   setUpAll(() {
-    // Register fallback so mocktail can use any<Task>()
     registerFallbackValue(FakeTask());
   });
 
   setUp(() {
     mockRepo = MockTaskRepository();
 
-    // Default stubs so methods that return Future don't return null
     when(() => mockRepo.getTasks(forceRefresh: any(named: 'forceRefresh')))
         .thenAnswer((_) async => <Task>[]);
     when(() => mockRepo.addTask(any())).thenAnswer((inv) async => inv.positionalArguments[0] as Task);
@@ -103,7 +99,7 @@ void main() {
       seed: () => TaskLoadSuccess(tasks: []),
       act: (b) {
         final taskToAdd = Task(
-          id: '', // BLoC will assign uuid in handler
+          id: '', 
           title: 'New',
           description: 'new desc',
           completed: false,
