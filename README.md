@@ -6,7 +6,6 @@ A robust, animated, and offline-first Task Management application built with Flu
 
 ### 1. UI/UX & Animations
 * **Custom Checkbox Animation:** An animated, interactive completion state for tasks.
-* **Hero Animations:** Seamless visual transitions connecting list items to the detail screen.
 * **List Operations:** Smooth entry and exit animations for adding and deleting tasks.
 
 ### 2. Theming (Dark Mode)
