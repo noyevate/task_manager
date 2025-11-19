@@ -6,6 +6,7 @@ import 'package:task_manager/providers/theme_cubit.dart';
 import 'package:task_manager/repositories/task_repository.dart';
 import 'package:task_manager/services/api_service.dart';
 import 'package:task_manager/services/storage_service.dart';
+import 'package:task_manager/screens/task_list_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -61,7 +62,7 @@ class MyApp extends StatelessWidget {
                 ),
                 darkTheme: ThemeData.dark(),
                 themeMode: themeState.isDarkMode ? ThemeMode.dark : ThemeMode.light,
-                home: const MyHomePage(title: "",),
+                home: TaskListScreen(),
               );
             },
           ),
